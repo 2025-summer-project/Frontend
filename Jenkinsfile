@@ -1,7 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'node:18'  // Node.js 포함된 이미지 사용
+            image 'node:18'
+            args '-u root'
         }
     }
 
