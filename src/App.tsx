@@ -1,26 +1,18 @@
-// import reactLogo from './assets/react.svg'
-// import './App.css'
-// import logo from './assets/logo.png'
-// import logoName from './assets/logo-name.png'
+// import MainPage from './pages/main/MainPage';
+// import MenuPage from './pages/menu/MenuPage'; 
 
 // function App() {
-//   return (
-//     <div className="app-container">
-//       <div className="top-left-wrapper">
-//         <img src={logo} alt="Logo" className="top-left-image" />
-//         <img src={logoName} alt="Logo Name" className="top-left-text" />
-//       </div>
-//     </div>
-//   )
-// } 
+//   return <MainPage />;
+// }
 
-// export default App
-// App.tsx
-import './App.css';
-import MainPage from './pages/main/MainPage';
+// export default App;
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 function App() {
-  return <MainPage />;
+  return (
+    <div style={{ width: '100%', height: '100vh', margin: 0 }}>
+      <h1>Welcome to the App</h1>
+    </div>
+  );
 }
-
-export default App;
