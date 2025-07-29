@@ -1,16 +1,18 @@
+/* 모달 오버레이: 화면 전체 덮고 중앙 정렬 */
 .upload-modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 999; /* 가장 위에 표시 */
 }
 
+/* 모달 본체 */
 .upload-modal {
   width: 600px;
-  background-color: #2d2e36;
+  background-color: #2d2e36; /* 어두운 배경 */
   color: white;
   padding: 32px;
   border-radius: 8px;
@@ -20,6 +22,7 @@
   align-items: flex-start;
 }
 
+/* 모달 제목 텍스트 */
 .upload-modal-title {
   font-size: 20px;
   font-weight: 600;
@@ -27,6 +30,7 @@
   text-align: left;
 }
 
+/* 모달 내부 구분선 */
 .upload-modal-divider {
   width: 100%;
   height: 2px;
@@ -34,10 +38,11 @@
   margin-bottom: 32px;
 }
 
+/* 업로드 영역: 클릭 또는 드래그 영역 */
 .upload-modal-area {
   width: 100%;
   height: 300px;
-  background-color: #e4e5e7;
+  background-color: #e4e5e7; /* 밝은 회색 */
   color: #222;
   display: flex;
   flex-direction: column;
@@ -49,12 +54,14 @@
   cursor: pointer;
 }
 
+/* 업로드 아이콘 박스 (도형들 들어가는 영역) */
 .upload-icon-boxes {
   position: relative;
   width: 64px;
   height: 64px;
 }
 
+/* 점선 네모 아이콘 */
 .upload-dotted-box {
   position: absolute;
   width: 64px;
@@ -64,6 +71,7 @@
   left: 0;
 }
 
+/* 채워진 네모 아이콘 */
 .upload-filled-box {
   position: absolute;
   width: 32px;
@@ -73,6 +81,7 @@
   right: 0;
 }
 
+/* 업로드된 파일 정보 표시 */
 .upload-file-info {
   display: flex;
   align-items: center;
@@ -81,6 +90,7 @@
   color: #111;
 }
 
+/* 파일 제거 버튼 */
 .upload-remove-button {
   background-color: #ff5252;
   color: white;
@@ -91,10 +101,12 @@
   cursor: pointer;
 }
 
+/* 파일 제거 버튼 hover 효과 */
 .upload-remove-button:hover {
   background-color: #e53935;
 }
 
+/* PDF 미리보기 iframe 영역 */
 .upload-pdf-preview {
   margin-top: 24px;
   width: 100%;
@@ -104,6 +116,7 @@
   overflow: hidden;
 }
 
+/* 하단 안내 문구 */
 .upload-modal-footer {
   margin-top: 24px;
   font-size: 13px;
