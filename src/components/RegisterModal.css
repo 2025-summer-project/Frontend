@@ -1,0 +1,116 @@
+.register-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  
+  /* 모달 박스 (내용 들어가는 흰 박스) */
+  .register-content {
+    background-color: #2d2d37;
+    padding: 40px;
+    border-radius: 12px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    width: 400px;
+  }
+  
+  /* 모달 타이틀 (회원가입 제목) */
+  .register-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+
+/* 이름 / 아이디 / 비밀번호 입력창 스타일 */
+  .register-input {
+    width: 100%;
+    padding: 14px 20px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  /* 아이디 입력창 + 중복확인 버튼을 감싸는 래퍼 */
+  .register-input-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  
+  /* 중복확인 버튼이 들어갈 공간 확보 */
+  .register-input.with-button {
+    padding-right: 110px;
+  }
+  
+  /* 중복확인 버튼 */
+  .register-check-inside {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 8px 14px;
+    border: none;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  
+  /* 중복확인 결과 텍스트 */
+  .register-check-text {
+    font-size: 12px;
+    margin: -10px 0 10px 4px;
+  }
+  
+  /* 중복확인 성공 시 텍스트 색상 */
+  .register-check-text.valid {
+    color: green;
+  }
+  
+  /* 중복확인 실패 시 텍스트 색상 */
+  .register-check-text.error {
+    color: red;
+  }
+  
+  /* 회원가입 버튼 */
+  .register-submit-button {
+    margin-top: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* 닫기 버튼 */
+  .register-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    color: white;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+  }
+  

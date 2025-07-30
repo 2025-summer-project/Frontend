@@ -23,14 +23,25 @@
     width: 400px;
   }
   
+  /* 로그인 입력 창 */
   .modal-input {
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid #aaa;
-    color: white;
-    font-size: 18px;
-    padding: 8px;
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    background-color: white;
+    color: black;
+    font-size: 16px;
     outline: none;
+    box-sizing: border-box;
+  }
+  
+  .modal-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: white;
   }
   
   .modal-buttons {
@@ -39,22 +50,40 @@
     margin-top: 20px;
   }
   
-  .modal-button {
-    background-color: #f9f4f4;
-    border: none;
-    padding: 10px 20px;
-    font-weight: bold;
-    cursor: pointer;
-  }
+/* 공통 버튼 스타일 */
+.modal-button {
+  width: 100%;
+  padding: 14px 20px;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* 회원가입 버튼 */
+.signup-button {
+  background-color: black;
+  color: white;
+}
+
+/* 로그인 버튼 */
+.login-button {
+  background-color: blue;
+  color: white;
+}
+
   
-  .modal-close {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    background: none;
-    color: white;
-    font-size: 18px;
-    border: none;
-    cursor: pointer;
-  }
+  
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  color: white;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+}
   
