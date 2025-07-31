@@ -1,5 +1,6 @@
 // MenuPage.tsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './MenuPage.css';
 import logo from '../../assets/logo.png';
 import logoNavy from '../../assets/logo-navy.png';
@@ -18,10 +19,12 @@ const MainPage: React.FC = () => {
   const [selectedMenu, setSelectedMenu] = useState(menuItems[0]); // 선택된 메뉴
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 여부
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]); // 업로드된 파일 목록
+  const navigate = useNavigate();
 
   // 로그아웃 처리
   const handleLogout = () => {
     console.log('로그아웃 되었습니다.');
+    navigate('/');
   };
 
   // 파일 업로드 시 리스트에 추가
