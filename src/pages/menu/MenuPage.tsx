@@ -1,3 +1,4 @@
+// MenuPage.tsx
 import React, { useState } from 'react';
 import './MenuPage.css';
 import logo from '../../assets/logo.png';
@@ -17,7 +18,6 @@ const MainPage: React.FC = () => {
   const [selectedMenu, setSelectedMenu] = useState(menuItems[0]); // 선택된 메뉴
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 여부
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]); // 업로드된 파일 목록
-  const [viewFileUrl, setViewFileUrl] = useState<string | null>(null); // 선택된 PDF 미리보기
 
   // 로그아웃 처리
   const handleLogout = () => {
@@ -29,10 +29,19 @@ const MainPage: React.FC = () => {
     setUploadedFiles((prev) => [...prev, file]);
   };
 
-  // PDF 파일 클릭 시 미리보기 열기
-  const handleViewFile = (file: File) => {
+  // 파일 다운로드 처리
+  const handleDownloadFile = (file: File) => {
     const url = URL.createObjectURL(file);
-    setViewFileUrl(url);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = file.name;
+    a.click();
+  };
+
+  // 외부 뷰어로 열기 (새 창)
+  const handleOpenInNewTab = (file: File) => {
+    const url = URL.createObjectURL(file);
+    window.open(url, '_blank');
   };
 
   // 선택된 메뉴에 따른 렌더링
@@ -40,7 +49,7 @@ const MainPage: React.FC = () => {
     switch (selectedMenu) {
       case '내 문서 목록':
         return (
-          <div style={{ textAlign: 'left' }}>
+          <div style={{ textAlign: 'left', maxWidth: '800px', margin: '0 auto' }}>
             <h3>업로드한 문서 목록</h3>
             {uploadedFiles.length === 0 ? (
               <p>아직 업로드한 문서가 없어요.</p>
@@ -49,25 +58,36 @@ const MainPage: React.FC = () => {
                 {uploadedFiles.map((file, idx) => (
                   <li
                     key={idx}
-                    style={{ cursor: 'pointer', color: 'blue', textAlign: 'left', listStyle: 'none' }}
-                    onClick={() => handleViewFile(file)}
+                    style={{
+                      listStyle: 'none',
+                      marginBottom: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '12px 16px',
+                      border: '1px solid #ccc',
+                      borderRadius: '8px',
+                      background: 'transparent'
+                    }}
                   >
-                    📄 {file.name}
+                    <span style={{ fontWeight: 500 }}>📄 {file.name}</span>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <button
+                        onClick={() => handleOpenInNewTab(file)}
+                        className="doc-button view"
+                      >
+                        보기
+                      </button>
+                      <button
+                        onClick={() => handleDownloadFile(file)}
+                        className="doc-button download"
+                      >
+                        다운로드
+                      </button>
+                    </div>
                   </li>
                 ))}
               </ul>
-            )}
-
-            {/* PDF 미리보기 */}
-            {viewFileUrl && (
-              <div style={{ marginTop: '24px' }}>
-                <iframe
-                  src={viewFileUrl}
-                  width="100%"
-                  height="500px"
-                  title="PDF 미리보기"
-                />
-              </div>
             )}
           </div>
         );
@@ -88,11 +108,12 @@ const MainPage: React.FC = () => {
       <aside className="sidebar">
         <img src={logoNavy} alt="Logo Navy" className="sidebar-logo" />
 
-        {/* 계약서 업로드 버튼 (기존 정렬 방식으로 복원) */}
+        {/* 계약서 업로드 버튼 */}
         <button className="upload-button" onClick={() => setIsModalOpen(true)}>
           계약서 업로드
         </button>
 
+        {/* 메뉴 리스트 */}
         <div className="menu">
           {menuItems.map((item) => (
             <div
@@ -120,7 +141,7 @@ const MainPage: React.FC = () => {
         <section className="content">{renderContent()}</section>
       </main>
 
-      {/* 업로드 모델 */}
+      {/* 업로드 모달 */}
       {isModalOpen && (
         <UploadModal
           onClose={() => setIsModalOpen(false)}
