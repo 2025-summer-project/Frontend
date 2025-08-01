@@ -138,3 +138,31 @@
   font-weight: 300;
   text-align: center;
 }
+
+.doc-button {
+  font-size: 14px;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.doc-button.view {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.doc-button.view:hover {
+  background-color: #3b7bc2;
+}
+
+.doc-button.download {
+  background-color: #50b378;
+  color: white;
+}
+
+.doc-button.download:hover {
+  background-color: #419764;
+}
