@@ -2,8 +2,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MenuPage.css';
-import logo from '../../assets/logo.png';
-import logoNavy from '../../assets/logo-navy.png';
 import logoName from '../../assets/logo-name.png';
 import UploadModal from '../../components/UploadModal';
 
@@ -52,12 +50,20 @@ const MainPage: React.FC = () => {
     switch (selectedMenu) {
       case '내 문서 목록':
         return (
-          <div style={{ textAlign: 'left', maxWidth: '800px', margin: '0 auto' }}>
-            <h3>업로드한 문서 목록</h3>
+          <div style={{
+            textAlign: 'left',
+            width: 'calc(100% - 64px)',
+            maxWidth: '1000px',
+            margin: '0 auto',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch',
+            paddingTop: '0px'
+          }}>
             {uploadedFiles.length === 0 ? (
-              <p>아직 업로드한 문서가 없어요.</p>
+              <p style={{ textAlign: 'center', marginTop: '32px' }}>아직 업로드한 문서가 없어요.</p>
             ) : (
-              <ul style={{ paddingLeft: '0px' }}>
+              <ul style={{ paddingLeft: '0px', marginTop: '0px' }}>
                 {uploadedFiles.map((file, idx) => (
                   <li
                     key={idx}
@@ -66,14 +72,18 @@ const MainPage: React.FC = () => {
                       marginBottom: '12px',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'space-between',
                       padding: '12px 16px',
                       border: '1px solid #ccc',
                       borderRadius: '8px',
-                      background: 'transparent'
+                      background: 'transparent',
+                      width: '100%',
+                      justifyContent: 'space-between',
+                      boxSizing: 'border-box',
                     }}
                   >
-                    <span style={{ fontWeight: 500 }}>📄 {file.name}</span>
+                    <span style={{ fontWeight: 500, flex: 1, marginRight: '16px', overflowWrap: 'anywhere' }}>
+                      📄 {file.name}
+                    </span>
                     <div style={{ display: 'flex', gap: '8px' }}>
                       <button
                         onClick={() => handleOpenInNewTab(file)}
@@ -109,8 +119,6 @@ const MainPage: React.FC = () => {
     <div className="container">
       {/* 사이드바 */}
       <aside className="sidebar">
-        <img src={logoNavy} alt="Logo Navy" className="sidebar-logo" />
-
         {/* 계약서 업로드 버튼 */}
         <button className="upload-button" onClick={() => setIsModalOpen(true)}>
           계약서 업로드
@@ -135,7 +143,7 @@ const MainPage: React.FC = () => {
       <main className="main-content">
         <header className="header">
           <div className="header-left">
-            <img src={logo} alt="Logo" className="header-logo" />
+            {/* 로고 제거됨 */}
             <img src={logoName} alt="Logo Name" className="header-name" />
           </div>
           <button className="logout" onClick={handleLogout}>로그아웃</button>
