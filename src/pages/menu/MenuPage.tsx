@@ -21,9 +21,12 @@ const MainPage: React.FC = () => {
 
   // 로그아웃 처리
   const handleLogout = () => {
-    console.log('로그아웃 되었습니다.');
-    navigate('/');
-  };
+   // 로그인 관련 정보 초기화
+   localStorage.removeItem('isLoggedIn');
+ 
+   console.log('로그아웃 되었습니다.');
+   navigate('/');
+ };
 
   // 파일 업로드 시 리스트에 추가
   const handleUpload = (file: File) => {
@@ -96,6 +99,9 @@ const MainPage: React.FC = () => {
                         className="doc-button download"
                       >
                         다운로드
+                      </button>
+                      <button onClick={() => navigate('/consult')} className="doc-button consult">
+                        상담하기
                       </button>
                     </div>
                   </li>
