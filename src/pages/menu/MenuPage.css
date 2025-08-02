@@ -122,11 +122,15 @@
   cursor: pointer;
   padding: 4px 8px;
   transition: color 0.2s;
+  outline: none;
+  box-shadow: none;
 }
 
-.logout:hover {
-  color: #ccc; /* 마우스 오버 시 색상 변화 */
+.logout:focus {
+  outline: none;
+  box-shadow: none;
 }
+
 
 /* 중앙 콘텐츠 영역 스타일 */
 .content {
@@ -165,4 +169,17 @@
 
 .doc-button.download:hover {
   background-color: #419764;
+}
+
+.doc-button.consult {
+  background-color: #ffcc00;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.doc-button.consult:hover {
+  background-color: #ffdb4d;
 }

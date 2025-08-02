@@ -5,6 +5,7 @@ import './index.css';
 import './App.tsx';
 import MainPage from './pages/main/MainPage'; 
 import MenuPage from './pages/menu/MenuPage';
+import ConsultPage from './pages/consult/ConsultPage'; 
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -12,6 +13,7 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/menu" element={<MenuPage />} />
+        <Route path="/consult" element={<ConsultPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
