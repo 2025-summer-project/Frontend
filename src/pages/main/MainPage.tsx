@@ -1,5 +1,6 @@
 // import React, { useState, useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
+// import { login, logout } from '../../api/auth';
 // import './MainPage.css';
 // import logo from '../../assets/logo.png';
 // import logoName from '../../assets/logo-name.png';
@@ -10,50 +11,43 @@
 // import banner from '../../assets/mainBack.png';
 // import LoginModal from '../../components/LoginModal';
 // import RegisterModal from '../../components/RegisterModal';
-// import type { User } from '../../type/User';
 
 // export default function MainPage() {
 //   const navigate = useNavigate();
 //   const [isLoggedIn, setIsLoggedIn] = useState(false);
-//   const [users, setUsers] = useState<User[]>(() => {
-//     const storedUsers = localStorage.getItem('users');
-//     return storedUsers ? JSON.parse(storedUsers) : [];
-//   });
+//   const [userName, setUserName] = useState('');
 //   const [showLogin, setShowLogin] = useState(false);
 //   const [showRegister, setShowRegister] = useState(false);
 
-//   // 새로고침 시 로그인 상태 유지
 //   useEffect(() => {
-//     const storedLogin = localStorage.getItem('isLoggedIn');
-//     const storedUsers = localStorage.getItem('users');
-//     if (storedLogin === 'true') setIsLoggedIn(true);
-//     if (storedUsers) setUsers(JSON.parse(storedUsers));
+//     const verifyAuth = () => {
+//       const access = localStorage.getItem('access');
+//       const name = localStorage.getItem('user_name');
+//       if (access) {
+//         setIsLoggedIn(true);
+//         setUserName(name || '');
+//       }
+//     };
+//     verifyAuth();
 //   }, []);
 
-//   // users 상태 변경 시 localStorage에도 저장
-//   useEffect(() => {
-//     localStorage.setItem('users', JSON.stringify(users));
-//   }, [users]);
-
 //   const handleStartClick = () => {
-//     if (isLoggedIn) navigate('/menu');
-//     else setShowLogin(true);
+//     isLoggedIn ? navigate('/menu') : setShowLogin(true);
 //   };
 
-//   const handleRegister = (newUser: User) => {
-//     const exists = users.some(user => user.id === newUser.id);
-//     if (exists) {
-//       alert('이미 존재하는 아이디입니다.');
-//       return;
+//   const handleLoginSuccess = (name: string) => {
+//     setIsLoggedIn(true);
+//     setUserName(name);
+//   };
+
+//   const handleLogout = async () => {
+//     try {
+//       await logout();
+//       setIsLoggedIn(false);
+//       setUserName('');
+//     } catch (err) {
+//       alert('로그아웃 중 오류가 발생했습니다.');
 //     }
-//     setUsers(prev => [...prev, newUser]);
-//     alert('회원가입이 완료되었습니다!');
-//     setShowRegister(false);
-//   };
-
-//   const handleLogout = () => {
-//     setIsLoggedIn(false);
-//     localStorage.removeItem('isLoggedIn');
 //   };
 
 //   return (
@@ -63,39 +57,40 @@
 //           <img src={logo} alt="로고" className="logo-img" />
 //           <img src={logoName} alt="로고텍스트" className="logo-text" />
 //         </div>
-//         {isLoggedIn ? (
-//           <button className="nav-button" onClick={handleLogout}>
-//             로그아웃
-//           </button>
-//         ) : (
-//           <button className="nav-button" onClick={() => setShowLogin(true)}>
-//             로그인
-//           </button>
-//         )}
+        
+//         <div className="auth-section">
+//           {isLoggedIn ? (
+//             <>
+//               <button className="nav-button" onClick={handleLogout}>
+//                 로그아웃
+//               </button>
+//             </>
+//           ) : (
+//             <button className="nav-button" onClick={() => setShowLogin(true)}>
+//               로그인
+//             </button>
+//           )}
+//         </div>
 //       </header>
 
-//       {/* 로그인 모달 */}
 //       {showLogin && (
 //         <LoginModal
-//           users={users}
 //           onClose={() => setShowLogin(false)}
 //           onClickRegister={() => {
 //             setShowLogin(false);
 //             setShowRegister(true);
 //           }}
-//           onLoginSuccess={() => {
-//             setIsLoggedIn(true);
-//             localStorage.setItem('isLoggedIn', 'true'); // 로그인 상태 저장
-//             setShowLogin(false);
-//           }}
+//           onLoginSuccess={handleLoginSuccess}
 //         />
 //       )}
 
-//       {/* 회원가입 모달 */}
 //       {showRegister && (
 //         <RegisterModal
 //           onClose={() => setShowRegister(false)}
-//           onRegister={handleRegister}
+//           onRegisterSuccess={() => {
+//             setShowRegister(false);
+//             setShowLogin(true);
+//           }}
 //         />
 //       )}
 
@@ -106,7 +101,7 @@
 //             똑똑한 법률 동반자 <strong>HighLaw</strong>
 //           </h2>
 //           <button className="nav-button" onClick={handleStartClick}>
-//             시작하기
+//             {isLoggedIn ? '시작하기' : '시작하기'}
 //           </button>
 //         </div>
 //         <div className="intro-right">
@@ -115,32 +110,25 @@
 //       </div>
 
 //       <section className="feature-section">
-//         <div className="feature-item">
-//           <img src={check} alt="check" />
-//           <h3>간단한 계약서 요약</h3>
-//           <p>복잡한 계약서를 AI가 자동으로 분석, 보기 쉽게 요약해드립니다</p>
-//         </div>
-//         <div className="feature-item">
-//           <img src={chat} alt="chat" />
-//           <h3>AI 법률 챗봇 상담</h3>
-//           <p>궁금한 조항을 누구나 쉽게 이해할 수 있도록 안내합니다</p>
-//         </div>
-//         <div className="feature-item">
-//           <img src={pdf} alt="pdf" />
-//           <h3>PDF 저장 & 공유 기능</h3>
-//           <p>요약된 계약서를 PDF로 내려받고 공유해보세요</p>
-//         </div>
-//         <div className="feature-item">
-//           <img src={search} alt="search" />
-//           <h3>스마트 계약 탐색 soon</h3>
-//           <p>키워드 입력 시 관련 조항을 찾아주는 기능 준비 중입니다</p>
-//         </div>
+//         {[
+//           { icon: check, title: '간단한 계약서 요약', desc: '복잡한 계약서를 AI가 분석해 요약' },
+//           { icon: chat, title: 'AI 법률 챗봇 상담', desc: '궁금한 조항을 쉽게 이해할 수 있도록 안내' },
+//           { icon: pdf, title: 'PDF 저장 & 공유 기능', desc: '요약된 계약서를 PDF로 다운로드' },
+//           { icon: search, title: '스마트 계약 탐색 soon', desc: '키워드로 관련 조항 찾기 기능' },
+//         ].map((item, index) => (
+//           <div key={index} className="feature-item">
+//             <img src={item.icon} alt={item.title} />
+//             <h3>{item.title}</h3>
+//             <p>{item.desc}</p>
+//           </div>
+//         ))}
 //       </section>
 //     </main>
 //   );
 // }
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { logout } from '../../api/auth';
 import './MainPage.css';
 import logo from '../../assets/logo.png';
 import logoName from '../../assets/logo-name.png';
@@ -151,47 +139,56 @@ import search from '../../assets/search.png';
 import banner from '../../assets/mainBack.png';
 import LoginModal from '../../components/LoginModal';
 import RegisterModal from '../../components/RegisterModal';
-import type { User } from '../../type/User';
 
 export default function MainPage() {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [users, setUsers] = useState<User[]>(() => {
-    const storedUsers = localStorage.getItem('users');
-    return storedUsers ? JSON.parse(storedUsers) : [];
-  });
+  const [userName, setUserName] = useState('');
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
 
   useEffect(() => {
-    const storedLogin = localStorage.getItem('isLoggedIn');
-    const storedUsers = localStorage.getItem('users');
-    if (storedLogin === 'true') setIsLoggedIn(true);
-    if (storedUsers) setUsers(JSON.parse(storedUsers));
+    // 👉 새로고침 시에도 로그인 유지하려면 아래 코드 유지
+    // 👉 새로고침 시 무조건 로그아웃 상태로 보이고 싶으면 이 부분 제거!
+    const access = localStorage.getItem('access');
+    const name = localStorage.getItem('user_name');
+    if (access) {
+      setIsLoggedIn(true);
+      setUserName(name || '');
+    }
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('users', JSON.stringify(users));
-  }, [users]);
-
+  // "시작하기" 버튼
   const handleStartClick = () => {
-    if (isLoggedIn) navigate('/menu');
-    else setShowLogin(true);
+    isLoggedIn ? navigate('/menu') : setShowLogin(true);
   };
 
-  const handleRegister = (newUser: User) => {
-    setUsers(prev => [...prev, newUser]);
-    alert('회원가입이 완료되었습니다!');
-    setShowRegister(false);
+  // 로그인 성공 처리
+  const handleLoginSuccess = (name: string) => {
+    setIsLoggedIn(true);
+    setUserName(name);
+    localStorage.setItem('access', 'token'); // 실제 토큰 저장
+    localStorage.setItem('user_name', name);
   };
 
-  const handleCheckDuplicate = (id: string) => {
-    return users.some(user => user.id === id);
-  };
+  // 로그아웃 처리
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (err) {
+      console.error('로그아웃 에러', err);
+    } finally {
+      // localStorage 정리
+      localStorage.removeItem('access');
+      localStorage.removeItem('user_name');
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem('isLoggedIn');
+      // 상태값 초기화
+      setIsLoggedIn(false);
+      setUserName('');
+
+      // 메인 페이지로 이동
+      navigate('/');
+    }
   };
 
   return (
@@ -201,41 +198,44 @@ export default function MainPage() {
           <img src={logo} alt="로고" className="logo-img" />
           <img src={logoName} alt="로고텍스트" className="logo-text" />
         </div>
-        {isLoggedIn ? (
-          <button className="nav-button" onClick={handleLogout}>
-            로그아웃
-          </button>
-        ) : (
-          <button className="nav-button" onClick={() => setShowLogin(true)}>
-            로그인
-          </button>
-        )}
+
+        <div className="auth-section">
+          {isLoggedIn ? (
+            <button className="nav-button" onClick={handleLogout}>
+              로그아웃
+            </button>
+          ) : (
+            <button className="nav-button" onClick={() => setShowLogin(true)}>
+              로그인
+            </button>
+          )}
+        </div>
       </header>
 
+      {/* 로그인 모달 */}
       {showLogin && (
         <LoginModal
-          users={users}
           onClose={() => setShowLogin(false)}
           onClickRegister={() => {
             setShowLogin(false);
             setShowRegister(true);
           }}
-          onLoginSuccess={() => {
-            setIsLoggedIn(true);
-            localStorage.setItem('isLoggedIn', 'true');
-            setShowLogin(false);
+          onLoginSuccess={handleLoginSuccess}
+        />
+      )}
+
+      {/* 회원가입 모달 */}
+      {showRegister && (
+        <RegisterModal
+          onClose={() => setShowRegister(false)}
+          onRegisterSuccess={() => {
+            setShowRegister(false);
+            setShowLogin(true);
           }}
         />
       )}
 
-      {showRegister && (
-        <RegisterModal
-          onClose={() => setShowRegister(false)}
-          onRegister={handleRegister}
-          onCheckDuplicate={handleCheckDuplicate}
-        />
-      )}
-
+      {/* 배너 */}
       <div className="intro-banner">
         <div className="intro-left">
           <h2>계약 이제는 AI에게 맡기세요!</h2>
@@ -251,27 +251,20 @@ export default function MainPage() {
         </div>
       </div>
 
+      {/* 기능 섹션 */}
       <section className="feature-section">
-        <div className="feature-item">
-          <img src={check} alt="check" />
-          <h3>간단한 계약서 요약</h3>
-          <p>복잡한 계약서를 AI가 자동으로 분석, 보기 쉽게 요약해드립니다</p>
-        </div>
-        <div className="feature-item">
-          <img src={chat} alt="chat" />
-          <h3>AI 법률 챗봇 상담</h3>
-          <p>궁금한 조항을 누구나 쉽게 이해할 수 있도록 안내합니다</p>
-        </div>
-        <div className="feature-item">
-          <img src={pdf} alt="pdf" />
-          <h3>PDF 저장 & 공유 기능</h3>
-          <p>요약된 계약서를 PDF로 내려받고 공유해보세요</p>
-        </div>
-        <div className="feature-item">
-          <img src={search} alt="search" />
-          <h3>스마트 계약 탐색 soon</h3>
-          <p>키워드 입력 시 관련 조항을 찾아주는 기능 준비 중입니다</p>
-        </div>
+        {[
+          { icon: check, title: '간단한 계약서 요약', desc: '복잡한 계약서를 AI가 분석해 요약' },
+          { icon: chat, title: 'AI 법률 챗봇 상담', desc: '궁금한 조항을 쉽게 이해할 수 있도록 안내' },
+          { icon: pdf, title: 'PDF 저장 & 공유 기능', desc: '요약된 계약서를 PDF로 다운로드' },
+          { icon: search, title: '스마트 계약 탐색 soon', desc: '키워드로 관련 조항 찾기 기능' },
+        ].map((item, index) => (
+          <div key={index} className="feature-item">
+            <img src={item.icon} alt={item.title} />
+            <h3>{item.title}</h3>
+            <p>{item.desc}</p>
+          </div>
+        ))}
       </section>
     </main>
   );
