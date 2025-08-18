@@ -19,14 +19,27 @@ const MainPage: React.FC = () => {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]); // 업로드된 파일 목록
   const navigate = useNavigate();
 
-  // 로그아웃 처리
-  const handleLogout = () => {
-   // 로그인 관련 정보 초기화
-   localStorage.removeItem('isLoggedIn');
- 
-   console.log('로그아웃 되었습니다.');
-   navigate('/');
- };
+// 로그아웃 처리
+const handleLogout = async () => {
+  try {
+    // 서버 로그아웃 API가 있다면 호출
+    // await logout();
+
+    // localStorage 정리
+    localStorage.removeItem('access');
+    localStorage.removeItem('user_name');
+    localStorage.removeItem('isLoggedIn');
+
+    console.log('로그아웃 되었습니다.');
+
+    // 메인 페이지로 이동
+    navigate('/');
+  } catch (err) {
+    console.error('로그아웃 에러', err);
+    navigate('/');
+  }
+};
+
 
   // 파일 업로드 시 리스트에 추가
   const handleUpload = (file: File) => {
