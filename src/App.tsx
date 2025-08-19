@@ -1,11 +1,3 @@
-// import MainPage from './pages/main/MainPage';
-// import MenuPage from './pages/menu/MenuPage'; 
-
-// function App() {
-//   return <MainPage />;
-// }
-
-// export default App;
 import React from 'react';
 import { Link } from 'react-router-dom';
 
